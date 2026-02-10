@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Album XV Naomi - Producciones Foro 7</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0f'/%3E%3Cpath d='M7 6h8v20H7a2 2 0 01-2-2V8a2 2 0 012-2z' fill='%23d4af37'/%3E%3Cpath d='M15 6h10a2 2 0 012 2v16a2 2 0 01-2 2H15V6z' fill='%23b8860b'/%3E%3Cpath d='M15 6v20' stroke='%23fff8e7' stroke-width='0.5'/%3E%3Ctext x='20' y='19' font-size='8' font-family='serif' fill='%23fff8e7' text-anchor='middle'%3EXV%3C/text%3E%3C/svg%3E">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a0a0f;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .bg-particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(212,175,55,0.07) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255,182,193,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(212,175,55,0.04) 0%, transparent 50%);
+            animation: bg-shift 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes bg-shift {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            100% { filter: hue-rotate(15deg) brightness(1.05); }
+        }
+
+        .ui-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .ui-overlay > * { pointer-events: auto; }
+
+        .header {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(10,10,15,0.95), transparent);
+        }
+
+        .logo { font-size: 1.1rem; font-weight: 900; letter-spacing: 3px; }
+        .logo span { color: #d4af37; }
+
+        .album-title {
+            text-align: center;
+        }
+        .album-title h2 {
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: 5px;
+            color: #d4af37;
+        }
+        .album-title p {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 3px;
+        }
+
+        .page-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 20px;
+            background: rgba(212,175,55,0.08);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-indicator .current {
+            font-size: 1.5rem; font-weight: 900;
+            color: #d4af37; font-family: monospace;
+        }
+        .page-indicator .separator { color: rgba(255,255,255,0.2); }
+        .page-indicator .total { color: rgba(255,255,255,0.4); font-family: monospace; }
+
+        .back-link {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex; align-items: center; gap: 6px;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #d4af37; }
+
+        .nav-controls {
+            position: absolute;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 15px;
+        }
+
+        .nav-btn {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            border: 1px solid rgba(212,175,55,0.2);
+            background: rgba(212,175,55,0.05);
+            color: #d4af37; font-size: 1.3rem;
+            cursor: pointer; transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .nav-btn:hover {
+            border-color: #d4af37;
+            background: rgba(212,175,55,0.15);
+            box-shadow: 0 0 25px rgba(212,175,55,0.2);
+            transform: scale(1.1);
+        }
+        .nav-btn:active { transform: scale(0.95); }
+        .nav-btn.disabled { opacity: 0.2; pointer-events: none; }
+
+        .page-dots {
+            display: flex; gap: 6px;
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 20px;
+        }
+
+        .page-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(212,175,55,0.2);
+            cursor: pointer; transition: all 0.3s;
+        }
+        .page-dot.active {
+            background: #d4af37;
+            box-shadow: 0 0 8px rgba(212,175,55,0.5);
+            transform: scale(1.3);
+        }
+        .page-dot:hover { background: rgba(212,175,55,0.5); }
+
+        .side-hint {
+            position: absolute; top: 50%;
+            transform: translateY(-50%);
+            padding: 15px 10px;
+            font-size: 0.7rem; letter-spacing: 3px;
+            writing-mode: vertical-lr;
+            color: rgba(212,175,55,0.15);
+        }
+        .side-hint.left { left: 15px; }
+        .side-hint.right { right: 15px; text-orientation: mixed; }
+
+        .info-panel {
+            position: absolute;
+            bottom: 100px; left: 30px;
+            max-width: 300px;
+            opacity: 0; transform: translateY(10px);
+            transition: all 0.5s;
+        }
+        .info-panel.visible { opacity: 1; transform: translateY(0); }
+        .info-panel h3 {
+            font-size: 0.9rem; color: #d4af37;
+            letter-spacing: 2px; margin-bottom: 6px;
+        }
+        .info-panel p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.5;
+        }
+
+        .keyboard-hints {
+            position: absolute; bottom: 100px; right: 30px;
+            display: flex; flex-direction: column; gap: 6px; opacity: 0.3;
+        }
+        .key-hint {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.7rem; color: rgba(255,255,255,0.5);
+        }
+        .key {
+            padding: 3px 8px;
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 4px; font-family: monospace; font-size: 0.65rem;
+        }
+
+        #album-canvas { position: fixed; inset: 0; z-index: 1; }
+
+        .loading-screen {
+            position: fixed; inset: 0; z-index: 100;
+            background: #0a0a0f;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px;
+            transition: opacity 0.8s, visibility 0.8s;
+        }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; }
+        .loading-spinner {
+            width: 50px; height: 50px;
+            border: 3px solid rgba(212,175,55,0.1);
+            border-top: 3px solid #d4af37;
+            border-right: 3px solid rgba(255,182,193,0.5);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text {
+            font-size: 0.8rem;
+            color: rgba(212,175,55,0.6);
+            letter-spacing: 4px;
+        }
+        .loading-sub {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .keyboard-hints { display: none; }
+            .side-hint { display: none; }
+            .info-panel { left: 15px; right: 15px; max-width: none; }
+            .nav-btn { width: 48px; height: 48px; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-particles"></div>
+
+    <div class="loading-screen" id="loader">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">ALBUM XV NAOMI</div>
+        <div class="loading-sub">Cargando fotos...</div>
+    </div>
+
+    <canvas id="album-canvas"></canvas>
+
+    <div class="ui-overlay">
+        <div class="header">
+            <a href="index.html" class="back-link">&#8592; Volver</a>
+            <div class="album-title">
+                <h2>XV A&Ntilde;OS NAOMI</h2>
+                <p>ALBUM PREMIUM</p>
+            </div>
+            <div class="page-indicator">
+                <span class="current" id="currentPage">01</span>
+                <span class="separator">/</span>
+                <span class="total" id="totalPages">11</span>
+            </div>
+        </div>
+
+        <div class="side-hint left">&#9664; ANTERIOR</div>
+        <div class="side-hint right">SIGUIENTE &#9654;</div>
+
+        <div class="info-panel" id="infoPanel">
+            <h3 id="pageTitle">PORTADA</h3>
+            <p id="pageDesc">Sesion en castillo - Haz clic en las flechas para recorrer el album</p>
+        </div>
+
+        <div class="keyboard-hints">
+            <div class="key-hint"><span class="key">&#8592;</span> Pagina anterior</div>
+            <div class="key-hint"><span class="key">&#8594;</span> Pagina siguiente</div>
+            <div class="key-hint"><span class="key">R</span> Rotar album</div>
+            <div class="key-hint"><span class="key">Scroll</span> Zoom</div>
+        </div>
+
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn" onclick="prevPage()">&#9664;</button>
+            <div class="page-dots" id="pageDots"></div>
+            <button class="nav-btn" id="nextBtn" onclick="nextPage()">&#9654;</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+    // =============================================
+    // ALBUM XV NAOMI - v3 CORREGIDO
+    // Cada imagen spread se corta a la mitad:
+    //   - Mitad izquierda -> cara trasera de la pagina anterior
+    //   - Mitad derecha  -> cara frontal de la pagina siguiente
+    // Al abrir el libro se ve el spread completo
+    // =============================================
+
+    // Fotos originales del album
+    const ALBUM_IMAGES = [
+        { file: 'album1/portada.jpeg', title: 'PORTADA', desc: 'Sesion fotografica en castillo - Vestido rosa con tiara de cristal', type: 'cover' },
+        { file: 'album1/1y2.jpeg', title: 'PAGINAS 1-2', desc: 'Sesion exterior en el castillo - Retrato y poses elegantes', type: 'spread' },
+        { file: 'album1/3y4.jpeg', title: 'PAGINAS 3-4', desc: 'Poses en escalinatas y muros del castillo', type: 'spread' },
+        { file: 'album1/5y6.jpeg', title: 'PAGINAS 5-6', desc: 'Del exterior al interior - Salon con candelabro', type: 'spread' },
+        { file: 'album1/7y8.jpeg', title: 'PAGINAS 7-8', desc: 'Ceremonia religiosa - Misa de XV anos', type: 'spread' },
+        { file: 'album1/9y10.jpeg', title: 'PAGINAS 9-10', desc: 'Fotos familiares en escalinatas de la iglesia', type: 'spread' },
+        { file: 'album1/11y12.jpeg', title: 'PAGINAS 11-12', desc: 'Chambelanes, damas y corte de honor', type: 'spread' },
+        { file: 'album1/13y14.jpeg', title: 'PAGINAS 13-14', desc: 'Venue nocturno - Letras gigantes NAOMI iluminadas', type: 'spread' },
+        { file: 'album1/15y16.jpeg', title: 'PAGINAS 15-16', desc: 'Pista de baile LED - Fotos con invitadas', type: 'spread' },
+        { file: 'album1/17y18.jpeg', title: 'PAGINAS 17-18', desc: 'Coronacion, vals y momentos especiales', type: 'spread' },
+        { file: 'album1/19y20.jpeg', title: 'PAGINAS 19-20', desc: 'Corte de pastel, brindis y celebracion final', type: 'spread' },
+    ];
+
+    // =============================================
+    // PAGE FACE MAPPING
+    // =============================================
+    // Estructura real del libro abierto:
+    //   Volteas pagina N -> ves: BACK de pagina N (izquierda) + FRONT de pagina N+1 (derecha)
+    //
+    // Pagina 0 (Tapa):  FRONT = portada foto    | BACK = izq spread 1
+    // Pagina 1:          FRONT = der spread 1    | BACK = izq spread 2
+    // Pagina 2:          FRONT = der spread 2    | BACK = izq spread 3
+    // ...
+    // Pagina 10:         FRONT = der spread 10   | BACK = contra-tapa
+    //
+    // Total: 11 hojas fisicas (tapa + 9 interiores + contra-tapa)
+
+    const NUM_SHEETS = 11; // hojas fisicas
+
+    // Mapeo: que muestra cada cara de cada hoja
+    // { imgIndex, side: 'left'|'right'|'cover'|'backcover'|'blank' }
+    function getFaceContent(sheetIndex, face) {
+        // face = 'front' o 'back'
+        if (sheetIndex === 0 && face === 'front') return { type: 'cover', imgIndex: 0 };
+        if (sheetIndex === 0 && face === 'back')  return { type: 'left',  imgIndex: 1 };
+
+        if (sheetIndex === NUM_SHEETS - 1 && face === 'front') return { type: 'right', imgIndex: 10 };
+        if (sheetIndex === NUM_SHEETS - 1 && face === 'back')  return { type: 'backcover' };
+
+        // Hojas interiores (1..9)
+        // FRONT = mitad derecha del spread (sheetIndex)
+        // BACK  = mitad izquierda del spread (sheetIndex + 1)
+        if (face === 'front') return { type: 'right', imgIndex: sheetIndex };
+        if (face === 'back')  return { type: 'left',  imgIndex: sheetIndex + 1 };
+    }
+
+    const CONFIG = {
+        albumWidth: 4,
+        albumHeight: 4,
+        coverThickness: 0.15,
+        pageThickness: 0.015,
+        spineWidth: 0.5,
+        numPages: NUM_SHEETS,
+        flipDuration: 900,
+        coverColor: 0x1a1209,
+        pageColor: 0xf8f4ec,
+        spineColor: 0xb8860b,
+    };
+
+    let scene, camera, renderer, albumGroup;
+    let pages = [];
+    let currentPageIndex = 0;
+    let isAnimating = false;
+    let autoRotate = true;
+    let mouseDown = false;
+    let prevMousePos = { x: 0, y: 0 };
+    let albumRotation = { x: -0.25, y: -0.4 };
+    let targetRotation = { x: -0.25, y: -0.4 };
+    let cameraDistance = 11;
+    let targetZoom = 11;
+    let loadedImages = [];
+    let imagesLoaded = 0;
+
+    // =============================================
+    // PRELOAD
+    // =============================================
+    function preloadImages(callback) {
+        const total = ALBUM_IMAGES.length;
+        loadedImages = new Array(total);
+
+        ALBUM_IMAGES.forEach((imgData, i) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                loadedImages[i] = img;
+                imagesLoaded++;
+                const sub = document.querySelector('.loading-sub');
+                if (sub) sub.textContent = `Cargando fotos... ${Math.round((imagesLoaded / total) * 100)}%`;
+                if (imagesLoaded === total) callback();
+            };
+            img.onerror = () => {
+                loadedImages[i] = null;
+                imagesLoaded++;
+                if (imagesLoaded === total) callback();
+            };
+            img.src = imgData.file;
+        });
+    }
+
+    // =============================================
+    // HALF-IMAGE TEXTURE (la clave del split)
+    // =============================================
+    function createHalfTexture(imgIndex, side) {
+        // side = 'left' o 'right'
+        // Textura cuadrada, sin margenes — la foto llena toda la pagina
+        const TEX = 800;
+        const canvas = document.createElement('canvas');
+        canvas.width = TEX;
+        canvas.height = TEX;
+        const ctx = canvas.getContext('2d');
+
+        // Fondo papel (por si la imagen no cubre todo)
+        ctx.fillStyle = '#f8f4ec';
+        ctx.fillRect(0, 0, TEX, TEX);
+
+        const img = loadedImages[imgIndex];
+        if (img) {
+            // La imagen original es un spread ~2:1
+            // Cortamos exactamente la mitad -> resultado ~1:1
+            const srcW = img.width / 2;
+            const srcH = img.height;
+            const srcX = side === 'left' ? 0 : img.width / 2;
+
+            // Llenar toda la textura cuadrada (cover/fill)
+            const halfRatio = srcW / srcH;
+            let sx = srcX, sy = 0, sw = srcW, sh = srcH;
+            if (halfRatio > 1) {
+                // Mas ancha que alta: recortar lados
+                sw = srcH;
+                sx = srcX + (srcW - sw) / 2;
+            } else if (halfRatio < 1) {
+                // Mas alta que ancha: recortar arriba/abajo
+                sh = srcW;
+                sy = (srcH - sh) / 2;
+            }
+
+            // Dibujar llenando toda la textura
+            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, TEX, TEX);
+        } else {
+            ctx.fillStyle = '#ddd';
+            ctx.font = '20px "Segoe UI"';
+            ctx.textAlign = 'center';
+            ctx.fillText('Foto no disponible', TEX / 2, TEX / 2);
+        }
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.encoding = THREE.sRGBEncoding;
+        return tex;
+    }
+
+    // =============================================
+    // COVER TEXTURES
+    // =============================================
+    function createCoverTexture() {
+        const TEX = 800;
+        const canvas = document.createElement('canvas');
+        canvas.width = TEX; canvas.height = TEX;
+        const ctx = canvas.getContext('2d');
+
+        // Fondo por si la imagen no carga
+        ctx.fillStyle = '#1a1209';
+        ctx.fillRect(0, 0, TEX, TEX);
+
+        // Foto portada — imagen completa extendida a toda la pagina
+        const img = loadedImages[0];
+        if (img) {
+            const imgRatio = img.width / img.height;
+            let sx = 0, sy = 0, sw = img.width, sh = img.height;
+            if (imgRatio > 1) {
+                // Mas ancha que alta: recortar lados
+                sw = img.height;
+                sx = (img.width - sw) / 2;
+            } else if (imgRatio < 1) {
+                // Mas alta que ancha: recortar arriba/abajo
+                sh = img.width;
+                sy = (img.height - sh) / 2;
+            }
+            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, TEX, TEX);
+        }
+
+        // Overlay sutil oscuro en la parte inferior para texto
+        const grad = ctx.createLinearGradient(0, TEX * 0.55, 0, TEX);
+        grad.addColorStop(0, 'rgba(0,0,0,0)');
+        grad.addColorStop(1, 'rgba(0,0,0,0.6)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, TEX * 0.55, TEX, TEX * 0.45);
+
+        // Texto sobre la imagen
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#d4af37'; ctx.font = 'bold 44px "Segoe UI"';
+        ctx.fillText('XV A\u00D1OS', TEX / 2, TEX - 130);
+        ctx.fillStyle = '#fff8e7'; ctx.font = '300 34px "Segoe UI"';
+        ctx.fillText('N A O M I', TEX / 2, TEX - 80);
+        ctx.fillStyle = 'rgba(212,175,55,0.5)'; ctx.font = '13px monospace';
+        ctx.fillText('PRODUCCIONES FORO 7', TEX / 2, TEX - 35);
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.encoding = THREE.sRGBEncoding;
+        return tex;
+    }
+
+    function createBackCoverTexture() {
+        const TEX = 800;
+        const canvas = document.createElement('canvas');
+        canvas.width = TEX; canvas.height = TEX;
+        const ctx = canvas.getContext('2d');
+
+        const grad = ctx.createLinearGradient(0, 0, TEX, TEX);
+        grad.addColorStop(0, '#0f0a04'); grad.addColorStop(1, '#1a1209');
+        ctx.fillStyle = grad; ctx.fillRect(0, 0, TEX, TEX);
+
+        ctx.strokeStyle = 'rgba(212,175,55,0.2)'; ctx.lineWidth = 2;
+        ctx.strokeRect(30, 30, TEX - 60, TEX - 60);
+
+        ctx.fillStyle = 'rgba(212,175,55,0.4)'; ctx.font = '44px serif'; ctx.textAlign = 'center';
+        ctx.fillText('\u25C8', TEX / 2, TEX / 2 - 30);
+        ctx.fillStyle = 'rgba(255,248,231,0.4)'; ctx.font = 'bold 22px "Segoe UI"';
+        ctx.fillText('PRODUCCIONES FORO 7', TEX / 2, TEX / 2 + 15);
+        ctx.fillStyle = 'rgba(212,175,55,0.25)'; ctx.font = '13px "Segoe UI"';
+        ctx.fillText('Preservando tus momentos mas especiales', TEX / 2, TEX / 2 + 50);
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.encoding = THREE.sRGBEncoding;
+        return tex;
+    }
+
+    function createBlankPageTexture() {
+        const TEX = 800;
+        const canvas = document.createElement('canvas');
+        canvas.width = TEX; canvas.height = TEX;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#f5f0e5'; ctx.fillRect(0, 0, TEX, TEX);
+        ctx.fillStyle = 'rgba(212,175,55,0.06)'; ctx.font = '50px serif'; ctx.textAlign = 'center';
+        ctx.fillText('\u25C8', TEX / 2, TEX / 2);
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.encoding = THREE.sRGBEncoding;
+        return tex;
+    }
+
+    // =============================================
+    // INIT
+    // =============================================
+    function init() {
+        scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x0a0a0f, 0.015);
+
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 3, cameraDistance);
+        camera.lookAt(0, 0, 0);
+
+        const canvas = document.getElementById('album-canvas');
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.1;
+
+        // Luces calidas doradas
+        scene.add(new THREE.AmbientLight(0x8080a0, 0.5));
+
+        const mainLight = new THREE.DirectionalLight(0xfff8e7, 0.9);
+        mainLight.position.set(5, 8, 5);
+        mainLight.castShadow = true;
+        mainLight.shadow.mapSize.set(2048, 2048);
+        mainLight.shadow.camera.near = 0.5; mainLight.shadow.camera.far = 30;
+        mainLight.shadow.camera.left = -10; mainLight.shadow.camera.right = 10;
+        mainLight.shadow.camera.top = 8; mainLight.shadow.camera.bottom = -8;
+        scene.add(mainLight);
+
+        const goldLight = new THREE.PointLight(0xd4af37, 0.7, 25);
+        goldLight.position.set(-5, 4, 4); scene.add(goldLight);
+        const pinkLight = new THREE.PointLight(0xffb6c1, 0.4, 20);
+        pinkLight.position.set(5, 2, -3); scene.add(pinkLight);
+        const rimLight = new THREE.PointLight(0xffffff, 0.3, 15);
+        rimLight.position.set(0, -2, 6); scene.add(rimLight);
+
+        // Piso
+        const ground = new THREE.Mesh(
+            new THREE.PlaneGeometry(40, 40),
+            new THREE.MeshPhongMaterial({ color: 0x080808, specular: 0x1a1209, shininess: 40 })
+        );
+        ground.rotation.x = -Math.PI / 2; ground.position.y = -3.5;
+        ground.receiveShadow = true; scene.add(ground);
+
+        // Particulas doradas
+        createGoldParticles();
+
+        // Crear album
+        createAlbum();
+        updateTargetAngles(); // abanico inicial
+        createPageDots();
+        setupEvents();
+        updatePageUI();
+        animate();
+
+        setTimeout(() => {
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('infoPanel').classList.add('visible');
+        }, 800);
+    }
+
+    function createGoldParticles() {
+        const count = 60;
+        const positions = new Float32Array(count * 3);
+        for (let i = 0; i < count * 3; i += 3) {
+            positions[i] = (Math.random() - 0.5) * 15;
+            positions[i+1] = (Math.random() - 0.5) * 10;
+            positions[i+2] = (Math.random() - 0.5) * 15;
+        }
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const pts = new THREE.Points(geo, new THREE.PointsMaterial({
+            color: 0xd4af37, size: 0.04, transparent: true, opacity: 0.4
+        }));
+        pts.userData.isParticles = true;
+        scene.add(pts);
+    }
+
+    // =============================================
+    // CREATE ALBUM — PIVOTES DISTRIBUIDOS EN EL LOMO
+    // =============================================
+    // En un libro real cada hoja tiene su propio punto de union
+    // dentro del lomo. Esto hace que al abrir el libro las hojas
+    // formen un patron de medio sol / estrella detras del lomo.
+    //
+    // Pagina 0 (portada):     pivotX = 0          (borde derecho del lomo)
+    // Pagina 1:               pivotX = -SW * 1/10
+    // Pagina 5:               pivotX = -SW * 5/10 (centro del lomo)
+    // Pagina 10 (contra-tapa): pivotX = -SW        (borde izquierdo del lomo)
+    //
+    // Cuando el libro esta cerrado, todos los meshes se alinean de x=0 a x=W
+    // gracias a un offset compensatorio. Cuando se abre, cada hoja gira
+    // alrededor de su propio pivote, creando el patron de estrella.
+    // =============================================
+    function createAlbum() {
+        albumGroup = new THREE.Group();
+        const W = CONFIG.albumWidth;
+        const H = CONFIG.albumHeight;
+        const CT = CONFIG.coverThickness;
+        const SW = CONFIG.spineWidth;
+        const NP = CONFIG.numPages;
+        const PT = CONFIG.pageThickness;
+
+        // --- HOJAS con pivotes distribuidos + correccion de gap ---
+        // Estructura de cada hoja:
+        //   pivotGroup (en pivotX, rota)          ← estrella del lomo
+        //     └── contentGroup (se desliza en X)   ← cierra el gap del spread
+        //           ├── pageMesh
+        //           ├── frontPlane
+        //           ├── backPlane
+        //           └── edges (solo tapas)
+        // El lomo se agrega como elemento estatico fuera de las hojas.
+        for (let i = 0; i < NP; i++) {
+            const isFirst = i === 0;
+            const isLast = i === NP - 1;
+            const thickness = (isFirst || isLast) ? CT : PT * 2.5;
+
+            // PIVOTE distribuido en el lomo
+            const pivotX = -(SW * i) / (NP - 1);
+
+            // Grupo de rotacion (en su pivote)
+            const pivotGroup = new THREE.Group();
+            pivotGroup.position.x = pivotX;
+
+            // Grupo de contenido (se desliza para cerrar gap)
+            const contentGroup = new THREE.Group();
+            pivotGroup.add(contentGroup);
+
+            // Offset para alinear hojas cuando el libro esta cerrado
+            const meshOX = W / 2 - pivotX;
+
+            // Cuerpo de la hoja
+            const pageMat = (isFirst || isLast)
+                ? new THREE.MeshPhongMaterial({ color: CONFIG.coverColor, specular: 0x4a3a1a, shininess: 30 })
+                : new THREE.MeshPhongMaterial({ color: CONFIG.pageColor, specular: 0xccccbb, shininess: 8 });
+            const pageGeo = new THREE.BoxGeometry(W, H, thickness);
+            const pageMesh = new THREE.Mesh(pageGeo, pageMat);
+            pageMesh.position.x = meshOX;
+            pageMesh.castShadow = true; pageMesh.receiveShadow = true;
+            contentGroup.add(pageMesh);
+
+            // FRONT face
+            const frontContent = getFaceContent(i, 'front');
+            let frontTex;
+            if (frontContent.type === 'cover') frontTex = createCoverTexture();
+            else if (frontContent.type === 'left') frontTex = createHalfTexture(frontContent.imgIndex, 'left');
+            else if (frontContent.type === 'right') frontTex = createHalfTexture(frontContent.imgIndex, 'right');
+            else frontTex = createBlankPageTexture();
+
+            const frontPlane = new THREE.Mesh(
+                new THREE.PlaneGeometry(W - 0.1, H - 0.1),
+                new THREE.MeshPhongMaterial({ map: frontTex, specular: 0x222211, shininess: 5 })
+            );
+            frontPlane.position.set(meshOX, 0, thickness / 2 + 0.003);
+            contentGroup.add(frontPlane);
+
+            // BACK face
+            const backContent = getFaceContent(i, 'back');
+            let backTex;
+            if (backContent.type === 'backcover') backTex = createBackCoverTexture();
+            else if (backContent.type === 'left') backTex = createHalfTexture(backContent.imgIndex, 'left');
+            else if (backContent.type === 'right') backTex = createHalfTexture(backContent.imgIndex, 'right');
+            else backTex = createBlankPageTexture();
+
+            const backPlane = new THREE.Mesh(
+                new THREE.PlaneGeometry(W - 0.1, H - 0.1),
+                new THREE.MeshPhongMaterial({ map: backTex, specular: 0x222211, shininess: 5 })
+            );
+            backPlane.position.set(meshOX, 0, -thickness / 2 - 0.003);
+            backPlane.rotation.y = Math.PI;
+            contentGroup.add(backPlane);
+
+            // Borde dorado en tapas
+            if (isFirst || isLast) {
+                const edges = new THREE.LineSegments(
+                    new THREE.EdgesGeometry(pageGeo),
+                    new THREE.LineBasicMaterial({ color: 0xd4af37, transparent: true, opacity: 0.35 })
+                );
+                edges.position.x = meshOX;
+                contentGroup.add(edges);
+            }
+
+            pages.push({
+                group: pivotGroup,      // para rotacion y posicion
+                content: contentGroup,  // para correccion de gap
+                targetAngle: 0,
+                currentAngle: 0,
+                index: i,
+                pivotX: pivotX,
+            });
+
+            albumGroup.add(pivotGroup);
+        }
+
+        albumGroup.position.y = 0.3;
+        scene.add(albumGroup);
+    }
+
+    // =============================================
+    // NAVEGACION CON FISICA DE LIBRO REAL
+    // =============================================
+    // Las hojas apiladas deben verse CERRADAS (como un bloque solido),
+    // igual que un libro real cerrado. No deben formar abanico.
+    //
+    // - Lado derecho (sin voltear): todas apuntan a angulo 0
+    // - Lado izquierdo (volteadas): todas apuntan a angulo -PI
+    // - La restriccion de colision (MIN_GAP muy pequeno) evita
+    //   que se traspasen durante la animacion, sin abrir abanico visible.
+
+    // Recalcula TODOS los angulos objetivo segun la posicion actual
+    function updateTargetAngles() {
+        for (let i = 0; i < pages.length; i++) {
+            if (i < currentPageIndex) {
+                // LADO IZQUIERDO — todas planas a -PI (cerradas)
+                pages[i].targetAngle = -Math.PI;
+            } else {
+                // LADO DERECHO — todas planas a 0 (cerradas)
+                pages[i].targetAngle = 0;
+            }
+        }
+    }
+
+    function nextPage() {
+        if (isAnimating) return;
+        if (currentPageIndex >= CONFIG.numPages) {
+            closeAndReset();
+            return;
+        }
+        isAnimating = true;
+        currentPageIndex++;
+        updateTargetAngles();
+        updatePageUI();
+        setTimeout(() => { isAnimating = false; }, CONFIG.flipDuration);
+    }
+
+    function prevPage() {
+        if (isAnimating) return;
+        if (currentPageIndex <= 0) {
+            openToEnd();
+            return;
+        }
+        isAnimating = true;
+        currentPageIndex--;
+        updateTargetAngles();
+        updatePageUI();
+        setTimeout(() => { isAnimating = false; }, CONFIG.flipDuration);
+    }
+
+    function openToEnd() {
+        isAnimating = true;
+        function openNext() {
+            if (currentPageIndex >= CONFIG.numPages) {
+                isAnimating = false;
+                updateTargetAngles();
+                updatePageUI();
+                return;
+            }
+            currentPageIndex++;
+            updateTargetAngles();
+            updatePageUI();
+            setTimeout(openNext, CONFIG.flipDuration * 0.2);
+        }
+        openNext();
+    }
+
+    function closeAndReset() {
+        isAnimating = true;
+        function closeNext() {
+            if (currentPageIndex <= 0) {
+                isAnimating = false;
+                updateTargetAngles();
+                updatePageUI();
+                return;
+            }
+            currentPageIndex--;
+            updateTargetAngles();
+            updatePageUI();
+            setTimeout(closeNext, CONFIG.flipDuration * 0.2);
+        }
+        closeNext();
+    }
+
+    function goToPage(target) {
+        if (isAnimating) return;
+        const step = () => {
+            if (currentPageIndex < target) { nextPage(); setTimeout(step, CONFIG.flipDuration * 0.35); }
+            else if (currentPageIndex > target) { prevPage(); setTimeout(step, CONFIG.flipDuration * 0.35); }
+        };
+        step();
+    }
+
+    function updatePageUI() {
+        document.getElementById('currentPage').textContent = String(currentPageIndex + 1).padStart(2, '0');
+        // Nunca se deshabilitan: hacen loop (inicio->final, final->inicio)
+        document.getElementById('prevBtn').classList.toggle('disabled', false);
+        document.getElementById('nextBtn').classList.toggle('disabled', false);
+        document.querySelectorAll('.page-dot').forEach((dot, i) => dot.classList.toggle('active', i === currentPageIndex));
+
+        if (currentPageIndex === 0) {
+            document.getElementById('pageTitle').textContent = 'PORTADA';
+            document.getElementById('pageDesc').textContent = 'XV Anos Naomi - Haz clic en la flecha para abrir el album';
+        } else if (currentPageIndex >= ALBUM_IMAGES.length) {
+            document.getElementById('pageTitle').textContent = 'FIN DEL ALBUM';
+            document.getElementById('pageDesc').textContent = 'Presiona siguiente para cerrar y volver al inicio';
+        } else {
+            const spread = ALBUM_IMAGES[currentPageIndex];
+            document.getElementById('pageTitle').textContent = spread.title;
+            document.getElementById('pageDesc').textContent = spread.desc;
+        }
+    }
+
+    function createPageDots() {
+        const container = document.getElementById('pageDots');
+        for (let i = 0; i <= CONFIG.numPages; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'page-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToPage(i);
+            container.appendChild(dot);
+        }
+        document.getElementById('totalPages').textContent = String(CONFIG.numPages).padStart(2, '0');
+    }
+
+    // =============================================
+    // EVENTS
+    // =============================================
+    function setupEvents() {
+        const canvas = document.getElementById('album-canvas');
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextPage();
+            else if (e.key === 'ArrowLeft') prevPage();
+            else if (e.key === 'r' || e.key === 'R') autoRotate = !autoRotate;
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            mouseDown = true; autoRotate = false;
+            prevMousePos = { x: e.clientX, y: e.clientY };
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!mouseDown) return;
+            targetRotation.y += (e.clientX - prevMousePos.x) * 0.005;
+            targetRotation.x += (e.clientY - prevMousePos.y) * 0.005;
+            targetRotation.x = Math.max(-1, Math.min(0.5, targetRotation.x));
+            prevMousePos = { x: e.clientX, y: e.clientY };
+        });
+        document.addEventListener('mouseup', () => { mouseDown = false; });
+
+        canvas.addEventListener('touchstart', (e) => {
+            mouseDown = true; autoRotate = false;
+            prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            if (!mouseDown) return;
+            targetRotation.y += (e.touches[0].clientX - prevMousePos.x) * 0.005;
+            targetRotation.x += (e.touches[0].clientY - prevMousePos.y) * 0.005;
+            targetRotation.x = Math.max(-1, Math.min(0.5, targetRotation.x));
+            prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        });
+        canvas.addEventListener('touchend', () => { mouseDown = false; });
+
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            targetZoom += e.deltaY * 0.01;
+            targetZoom = Math.max(5, Math.min(20, targetZoom));
+        }, { passive: false });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Swipe
+        let touchStartX = 0;
+        canvas.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+        canvas.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(dx) > 60) { dx < 0 ? nextPage() : prevPage(); }
+        });
+    }
+
+    // =============================================
+    // ANIMATION
+    // =============================================
+    function animate() {
+        requestAnimationFrame(animate);
+
+        if (autoRotate) targetRotation.y += 0.0015;
+
+        albumRotation.x += (targetRotation.x - albumRotation.x) * 0.05;
+        albumRotation.y += (targetRotation.y - albumRotation.y) * 0.05;
+
+        if (albumGroup) {
+            albumGroup.rotation.x = albumRotation.x;
+            albumGroup.rotation.y = albumRotation.y;
+            albumGroup.position.y = 0.3 + Math.sin(Date.now() * 0.0008) * 0.12;
+        }
+
+        cameraDistance += (targetZoom - cameraDistance) * 0.05;
+        camera.position.set(0, 3, cameraDistance);
+        camera.lookAt(0, 0.3, 0);
+
+        // Flip de paginas — fisica de libro con abanico + colision
+        const spreadZ = 0.5;
+        const stackGap = 0.004;
+        const MIN_GAP = 0.003; // separacion minima imperceptible (evita traspaso sin abrir abanico)
+
+        // Paso 1: interpolar cada pagina hacia su angulo objetivo
+        pages.forEach((page) => {
+            const diff = page.targetAngle - page.currentAngle;
+            if (Math.abs(diff) > 0.001) {
+                page.currentAngle += diff * 0.07;
+            }
+        });
+
+        // Paso 2: RESTRICCION DE COLISION
+        // Regla: page[0].angle <= page[1].angle <= ... <= page[N].angle
+        // Ninguna pagina puede cruzar a otra — si llega, la empuja
+        // Pasada hacia adelante: si page[i] empuja a page[i+1]
+        for (let i = 0; i < pages.length - 1; i++) {
+            const minNext = pages[i].currentAngle + MIN_GAP;
+            if (pages[i + 1].currentAngle < minNext) {
+                pages[i + 1].currentAngle = minNext;
+            }
+        }
+        // Pasada hacia atras: si page[i+1] empuja a page[i]
+        for (let i = pages.length - 2; i >= 0; i--) {
+            const maxPrev = pages[i + 1].currentAngle - MIN_GAP;
+            if (pages[i].currentAngle > maxPrev) {
+                pages[i].currentAngle = maxPrev;
+            }
+        }
+
+        // Paso 3: rotacion, Z sinusoidal, y CORRECCION DE GAP
+        pages.forEach((page) => {
+            page.group.rotation.y = page.currentAngle;
+
+            let depth = 0;
+            if (page.index < currentPageIndex) {
+                depth = (currentPageIndex - 1) - page.index;
+            } else {
+                depth = page.index - currentPageIndex;
+            }
+
+            // Z SINUSOIDAL — las paginas se arquean hacia el lector
+            const arcZ = Math.sin(-page.currentAngle) * 0.3;
+            const waveZ = 0.18 * Math.cos(depth * 0.7) * Math.exp(-depth * 0.35);
+            page.group.position.z = spreadZ - depth * stackGap + arcZ + waveZ;
+
+            // CORRECCION DE GAP — para TODAS las paginas
+            // Cada hoja tiene un pivote distribuido en el lomo.
+            // Sin correccion, al voltear a -PI las hojas quedan desalineadas
+            // (cada una mas desplazada que la anterior).
+            // Con gapFix = 2 * pivotX * flipProgress, las hojas volteadas
+            // se alinean de x=-W a x=0 (espejo de la posicion cerrada x=0 a x=W).
+            // Asi el stack izquierdo luce igual (sandwich) que el derecho.
+            const flipProgress = Math.abs(page.currentAngle) / Math.PI;
+            const targetGapFix = 2 * page.pivotX * flipProgress;
+            page.content.position.x += (targetGapFix - page.content.position.x) * 0.12;
+        });
+
+        // Particulas
+        scene.children.forEach(child => {
+            if (child.userData && child.userData.isParticles) {
+                child.rotation.y += 0.0003;
+                child.position.y = Math.sin(Date.now() * 0.0005) * 0.2;
+            }
+        });
+
+        renderer.render(scene, camera);
+    }
+
+    // =============================================
+    // START
+    // =============================================
+    window.addEventListener('DOMContentLoaded', () => {
+        preloadImages(() => { init(); });
+    });
+    </script>
+</body>
+</html>
