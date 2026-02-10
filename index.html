@@ -12,66 +12,8 @@
     <!-- GSAP for pro animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <!-- Foro 7 Top Navigation Bar -->
-    <style>
-    .foro7-topbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 36px;
-        background: #050508;
-        border-bottom: 1px solid rgba(212,175,55,0.15);
-        z-index: 10001;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        box-sizing: border-box;
-    }
-    .foro7-topbar a {
-        font-family: monospace;
-        font-size: 10px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.5);
-        text-decoration: none;
-        padding: 4px 14px;
-        border-radius: 4px;
-        transition: color 0.25s, background 0.25s;
-    }
-    .foro7-topbar a:hover {
-        color: #d4af37;
-    }
-    .foro7-topbar a.foro7-active {
-        background: rgba(212,175,55,0.15);
-        color: #d4af37;
-    }
-    /* Push existing fixed navbar down by 36px */
-    .nav-anime {
-        top: 36px !important;
-    }
-    /* Push mobile fullscreen nav down */
-    @media (max-width: 768px) {
-        .foro7-topbar a {
-            font-size: 9px;
-            letter-spacing: 1px;
-        }
-        .nav-links.active {
-            top: 36px !important;
-            height: calc(100vh - 36px) !important;
-        }
-    }
-    </style>
 </head>
 <body>
-    <!-- Foro 7 Top Navigation Bar -->
-    <div class="foro7-topbar">
-        <a href="https://invitados.org">Inicio</a>
-        <a href="https://foro7.invitados.org">Paquetes &amp; Eventos</a>
-        <a href="https://studio.invitados.org" class="foro7-active">Productos 3D</a>
-    </div>
-
     <!-- Anime Particle Background -->
     <canvas id="particle-canvas"></canvas>
 
@@ -597,6 +539,10 @@
                 <span>FORO 7 <span class="accent">STUDIO</span></span>
             </div>
             <p class="footer-text">Transformando momentos en arte tangible</p>
+            <div style="display:flex;justify-content:center;gap:16px;margin:20px 0;flex-wrap:wrap;">
+                <a href="https://invitados.org" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;letter-spacing:1px;padding:8px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:6px;transition:all 0.3s;">Inicio</a>
+                <a href="https://foro7.invitados.org/#paquetes" target="_blank" style="color:#d4af37;text-decoration:none;font-size:13px;letter-spacing:1px;padding:8px 20px;border:1px solid rgba(212,175,55,0.3);border-radius:6px;transition:all 0.3s;">Ver Paquetes y Precios</a>
+            </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 Desarrollado por Arturo Cruz &mdash; <a href="https://foro7.invitados.org" style="color:#d4af37;text-decoration:none;">Foro 7 Studio</a></p>
             </div>
