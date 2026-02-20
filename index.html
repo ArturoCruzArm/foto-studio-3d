@@ -753,5 +753,145 @@
     </script>
 
     <script src="app.js"></script>
+
+<!-- ══ CHATBOT FORO 7 ══════════════════════════════════════════ -->
+<style>
+button:has(.fa-comment-alt),a:has(.fa-comment-alt),div:has(>.fa-comment-alt){display:none!important;}
+#f7cb-btn{position:fixed;bottom:100px;right:30px;z-index:9998;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#b8860b,#d4af37);border:none;cursor:pointer;box-shadow:0 4px 18px rgba(212,175,55,0.5);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .2s;}
+#f7cb-btn:hover{transform:scale(1.1);}
+#f7cb-win{position:fixed;bottom:166px;right:30px;z-index:9999;width:340px;max-height:520px;border-radius:16px;background:#1a1a2e;border:1px solid rgba(212,175,55,0.3);box-shadow:0 8px 40px rgba(0,0,0,0.6);display:none;flex-direction:column;overflow:hidden;font-family:'Segoe UI',sans-serif;}
+#f7cb-win.open{display:flex;}
+#f7cb-head{background:linear-gradient(135deg,#12122a,#1e1e3a);padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(212,175,55,0.2);}
+#f7cb-head img{width:32px;height:32px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(212,175,55,0.5));}
+#f7cb-hn{color:#d4af37;font-weight:700;font-size:14px;}
+#f7cb-hs{color:rgba(255,255,255,0.5);font-size:11px;}
+#f7cb-x{margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.5);font-size:20px;cursor:pointer;line-height:1;padding:0;}
+#f7cb-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
+#f7cb-msgs::-webkit-scrollbar{width:4px;}
+#f7cb-msgs::-webkit-scrollbar-thumb{background:rgba(212,175,55,0.3);border-radius:2px;}
+.cb-bot,.cb-usr{max-width:88%;padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.5;word-break:break-word;}
+.cb-bot{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.9);align-self:flex-start;border-bottom-left-radius:3px;}
+.cb-usr{background:linear-gradient(135deg,#b8860b,#d4af37);color:#1a1a2e;align-self:flex-end;font-weight:600;border-bottom-right-radius:3px;}
+.cb-dot{display:inline-block;width:6px;height:6px;margin:0 2px;background:#d4af37;border-radius:50%;animation:cb-bounce .9s infinite;}
+.cb-dot:nth-child(2){animation-delay:.15s;}.cb-dot:nth-child(3){animation-delay:.3s;}
+@keyframes cb-bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+#f7cb-qr{padding:0 12px 10px;display:flex;flex-wrap:wrap;gap:6px;}
+.cb-qr{background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.35);color:#d4af37;padding:5px 11px;border-radius:20px;font-size:12px;cursor:pointer;transition:background .2s;}
+.cb-qr:hover{background:rgba(212,175,55,0.25);}
+#f7cb-form{display:flex;padding:10px 12px;border-top:1px solid rgba(212,175,55,0.15);gap:8px;}
+#f7cb-inp{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(212,175,55,0.25);border-radius:20px;padding:8px 14px;color:#fff;font-size:13px;outline:none;}
+#f7cb-inp::placeholder{color:rgba(255,255,255,0.35);}
+#f7cb-send{background:#d4af37;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:14px;color:#1a1a2e;display:flex;align-items:center;justify-content:center;}
+</style>
+<button id="f7cb-btn" onclick="f7T()" aria-label="Abrir chat">💬</button>
+<div id="f7cb-win">
+  <div id="f7cb-head">
+    <img src="logo.png" alt="Foro 7">
+    <div><div id="f7cb-hn">Asistente Foro 7</div><div id="f7cb-hs">🟢 En línea</div></div>
+    <button id="f7cb-x" onclick="f7T()">×</button>
+  </div>
+  <div id="f7cb-msgs"></div>
+  <div id="f7cb-qr"></div>
+  <form id="f7cb-form" onsubmit="return false;">
+    <input id="f7cb-inp" placeholder="Escribe tu pregunta..." autocomplete="off">
+    <button id="f7cb-send" type="submit">➤</button>
+  </form>
+</div>
+<script>
+(function(){
+const WA='https://wa.me/5214779203776';
+const KB=[
+  {kw:['hola','buenos','buenas','saludos','hey'],
+   res:'¡Hola! 👋 Soy el asistente de <strong>Foro 7 Producciones</strong>. Creamos álbumes, fotolibros y productos fotográficos premium para tus eventos.\n\n¿En qué te puedo ayudar?',
+   qr:['Ver paquetes','Precios','Álbumes','Contacto']},
+  {kw:['precio','precios','costo','cuanto','cuánto','tarifa','cobran','vale'],
+   res:'💰 <strong>Paquetes Foto Studio:</strong>\n\n• Esencial — desde $2,500 MXN\n• Premium — desde $4,500 MXN\n• Luxury — desde $7,500 MXN\n\n🎯 <strong>Adicionales:</strong>\n• Dron 4K — +$1,500 MXN\n• Invitación Digital — desde $3,500 MXN\n• Música Personalizada — desde +$1,500 MXN',
+   qr:['Esencial','Premium','Luxury','Cotizar']},
+  {kw:['esencial','basico','básico','economico','inicio'],
+   res:'📦 <strong>Paquete Esencial — desde $2,500 MXN</strong>\n\n✓ USB personalizado con fotos y video\n✓ Álbum digital editado\n✓ Edición profesional\n✓ Entrega en formato digital',
+   qr:['Paquete Premium','Ver todos','Cotizar']},
+  {kw:['premium','medio','popular'],
+   res:'⭐ <strong>Paquete Premium — desde $4,500 MXN</strong>\n\n✓ USB personalizado premium\n✓ Álbum de pasta dura (30 páginas)\n✓ Fotolibro profesional\n✓ Video cinematográfico\n✓ Entrega física y digital\n\n🔥 El más solicitado.',
+   qr:['Paquete Luxury','Cotizar Premium']},
+  {kw:['luxury','lujo','exclusivo','vip','todo incluido'],
+   res:'💎 <strong>Paquete Luxury — desde $7,500 MXN</strong>\n\n✓ USB premium grabado a laser\n✓ Álbum pasta dura de lujo (60 págs.)\n✓ Fotolibro de colección\n✓ Caja premium con compartimentos\n✓ Video 4K\n✓ Mismo Día Edit\n✓ Dron incluido',
+   qr:['Cotizar Luxury','Ver precios','Contacto']},
+  {kw:['album','álbum','fotolibro','pasta','dura'],
+   res:'📚 <strong>Álbumes y Fotolibros Premium</strong>\n\n• Álbum pasta dura — 20-60 páginas papel fotográfico\n• Fotolibro profesional — diseño editorial\n• Caja premium — compartimentos para fotos impresas\n\nDisponibles en paquetes Premium y Luxury.',
+   qr:['Ver paquetes','Cotizar','Contacto']},
+  {kw:['usb','memoria','digital'],
+   res:'💾 <strong>USB Personalizado</strong>\n\n✓ Grabado con tu nombre o logo\n✓ Todas las fotos editadas\n✓ Resolución original\n✓ Presentación elegante\n\nIncluido en todos los paquetes.',
+   qr:['Ver paquetes','Contacto']},
+  {kw:['drone','dron','aereo','aéreo','aire'],
+   res:'🚁 <strong>Dron 4K — +$1,500 MXN</strong>\n\n✓ Videos 4K desde el aire\n✓ Piloto certificado\n✓ Tomas de venue y ceremonias\n\nIncluido en Luxury. Agrega +$1,500 a Esencial o Premium.',
+   qr:['Paquete Luxury','Cotizar con dron']},
+  {kw:['invitacion','invitación','digital','web'],
+   res:'💌 <strong>Invitación Digital — desde $3,500 MXN</strong>\n\n✓ Diseño animado personalizado\n✓ RSVP y mapa\n✓ Acceso desde cualquier dispositivo\n\nVer más: <a href="https://foro7.invitados.org" style="color:#d4af37;" target="_blank">foro7.invitados.org</a>',
+   qr:['Ver paquetes de foto','Contacto']},
+  {kw:['musica','música','cancion','audio','personalizada'],
+   res:'🎵 <strong>Música Personalizada — desde +$1,500 MXN</strong>\n\n✓ Composición original\n✓ Producción profesional\n✓ Ideal para el video del evento',
+   qr:['Ver paquetes','Cotizar','Contacto']},
+  {kw:['pyme','empresa','negocio','comercial','presencia'],
+   res:'🏢 <strong>Paquete Presencia Digital — desde $3,500 MXN/mes</strong>\n\n✓ Sitio web profesional\n✓ Sesión fotográfica comercial\n✓ Redes sociales\n✓ Actualizaciones mensuales',
+   qr:['Cotizar para mi empresa','Contacto']},
+  {kw:['referido','referidos','recomendar','descuento','amigo'],
+   res:'🤝 <strong>Programa de Referidos</strong>\n\n🎁 <strong>Tú:</strong> $500 MXN de crédito\n🎁 <strong>Tu amigo:</strong> 20% de descuento\n\n¡Sin límite de referidos!',
+   qr:['Cotizar para mí','Contacto']},
+  {kw:['contacto','whatsapp','llamar','telefono','asesor','cotizar'],
+   res:'📲 <strong>¡Contáctanos!</strong>\n\n📞 +52 477 920 3776\n📧 foro7.producciones@hotmail.com\n📍 Padilla 112, Cumbres de Arbide, León, Gto.\n\n<a href="'+WA+'" target="_blank" style="color:#d4af37;">👉 Abrir WhatsApp</a>',
+   qr:[]},
+  {kw:['ubicacion','ubicación','donde','dónde','leon','gto'],
+   res:'📍 <strong>León, Guanajuato</strong>\n\nPadilla 112, Cumbres de Arbide\nLeón, Gto.\n\n📞 +52 477 920 3776',
+   qr:['Contacto','Ver paquetes']},
+  {kw:['boda','bodas','matrimonio','novios'],
+   res:'💍 <strong>Bodas — Foto Studio 3D</strong>\n\n• Esencial desde $2,500\n• Premium desde $4,500\n• Luxury desde $7,500 (dron incluido)\n\nÁlbum, fotolibro, USB y video según paquete.',
+   qr:['Ver paquetes','Cotizar mi boda']},
+  {kw:['quince','quinces','xv','15','fiesta'],
+   res:'👑 <strong>XV Años — Foto Studio 3D</strong>\n\n• Esencial desde $2,500\n• Premium desde $4,500\n• Luxury desde $7,500',
+   qr:['Ver paquetes','Cotizar mis XV']},
+  {kw:['disponible','disponibilidad','fecha','agendar','reservar'],
+   res:'📅 Para verificar disponibilidad:\n\n📞 +52 477 920 3776',
+   qr:['Abrir WhatsApp','Ver paquetes']}
+];
+const FB={res:'No encontré esa respuesta, pero un asesor puede ayudarte. 😊',qr:['Ver paquetes','Precios','Contacto por WhatsApp']};
+function nm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ');}
+function match(txt){let best=null,top=0;const t=nm(txt);KB.forEach(i=>{let sc=0;i.kw.forEach(k=>{if(t.includes(nm(k)))sc+=k.length;});if(sc>top){top=sc;best=i;}});return top>0?best:null;}
+function userMsg(t){const d=document.createElement('div');d.className='cb-usr';d.textContent=t;document.getElementById('f7cb-msgs').appendChild(d);d.scrollIntoView({block:'end'});}
+function bot(intent){
+  const msgs=document.getElementById('f7cb-msgs'),qrEl=document.getElementById('f7cb-qr');
+  qrEl.innerHTML='';
+  const typing=document.createElement('div');typing.className='cb-bot';
+  typing.innerHTML='<span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span>';
+  msgs.appendChild(typing);typing.scrollIntoView({block:'end'});
+  setTimeout(()=>{
+    typing.remove();
+    const d=document.createElement('div');d.className='cb-bot';
+    d.innerHTML=intent.res.replace(/\n/g,'<br>');
+    msgs.appendChild(d);d.scrollIntoView({block:'end'});
+    (intent.qr||[]).forEach(q=>{const btn=document.createElement('button');btn.className='cb-qr';btn.textContent=q;btn.onclick=()=>qrClick(q);qrEl.appendChild(btn);});
+  },700);
+}
+function qrClick(q){
+  document.getElementById('f7cb-qr').innerHTML='';userMsg(q);
+  if(['cotizar','whatsapp','asesor','abrir whatsapp'].some(t=>nm(q).includes(nm(t)))){window.open(WA,'_blank');return;}
+  bot(match(q)||FB);
+}
+function send(){
+  const inp=document.getElementById('f7cb-inp'),txt=inp.value.trim();if(!txt)return;
+  inp.value='';document.getElementById('f7cb-qr').innerHTML='';userMsg(txt);
+  if(['cotizar','whatsapp','asesor','verificar'].some(t=>nm(txt).includes(nm(t)))){window.open(WA,'_blank');return;}
+  bot(match(txt)||FB);
+}
+function f7T(){
+  const w=document.getElementById('f7cb-win'),open=w.classList.toggle('open');
+  if(open&&!document.getElementById('f7cb-msgs').children.length){
+    bot({res:'¡Hola! 👋 ¿Qué tipo de recuerdo fotográfico buscas? 📸',qr:['Ver paquetes','Precios','Álbumes','Bodas','XV Años']});
+  }
+}
+document.getElementById('f7cb-form').addEventListener('submit',send);
+document.getElementById('f7cb-send').addEventListener('click',send);
+})();
+</script>
+<!-- ══ FIN CHATBOT ══════════════════════════════════════════════ -->
 </body>
 </html>
