@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotografía para Empresas y PYMES en León | Foro 7 Studio</title>
+    <meta name="description" content="Fotografía de producto, corporativa, contenido para redes sociales y video comercial en León, Gto. Desde $3,000 MXN.">
+    <meta property="og:title" content="Fotografía para Empresas y PYMES en León | Foro 7 Studio">
+    <meta property="og:description" content="Fotografía de producto, corporativa, contenido para redes sociales y video comercial en León, Gto. Desde $3,000 MXN.">
+    <meta property="og:image" content="https://img.youtube.com/vi/wwsLq4HkTHs/maxresdefault.jpg">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0f'/%3E%3Ctext x='16' y='12' font-size='9' font-weight='bold' font-family='monospace' fill='%2300f0ff' text-anchor='middle'%3EFORO%3C/text%3E%3Ctext x='16' y='24' font-size='14' font-weight='900' font-family='monospace' fill='%23d4af37' text-anchor='middle'%3E7%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
+    <!-- Three.js for 3D rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for pro animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        /* Active nav link */
+        .nav-link.page-active { color: #d4af37 !important; border-bottom: 2px solid #d4af37; }
+    </style>
+</head>
+<body>
+
+    <!-- Anime Particle Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Cursor Trail Effect -->
+    <div id="cursor-trail"></div>
+
+    <!-- Loading Screen Anime Style -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-ring">
+                <div class="ring-segment"></div>
+                <div class="ring-segment"></div>
+                <div class="ring-segment"></div>
+            </div>
+            <h2 class="loader-text glitch" data-text="STUDIO 3D">STUDIO 3D</h2>
+            <div class="loader-bar">
+                <div class="loader-bar-fill"></div>
+            </div>
+            <p class="loader-sub">Cargando experiencia inmersiva...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-anime" id="navbar">
+        <div class="nav-glow"></div>
+        <div class="nav-content">
+            <div class="logo anime-float">
+                <img src="logo.png" alt="Foro 7 Producciones" style="height:52px;width:auto;display:block;">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link" data-text="INICIO">INICIO</a></li>
+                <li><a href="bodas.html" class="nav-link" data-text="BODAS">BODAS</a></li>
+                <li><a href="xv-anos.html" class="nav-link" data-text="XV AÑOS">XV AÑOS</a></li>
+                <li><a href="eventos.html" class="nav-link" data-text="EVENTOS">EVENTOS</a></li>
+                <li><a href="empresas.html" class="nav-link page-active" data-text="EMPRESAS">EMPRESAS</a></li>
+                <li><a href="#paquetes" class="nav-link" data-text="PAQUETES">PAQUETES</a></li>
+                <li><a href="#contacto" class="nav-link" data-text="CONTACTO">CONTACTO</a></li>
+            </ul>
+            <button class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-bg-animation">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+            <div class="floating-shape shape-4"></div>
+            <div class="floating-shape shape-5"></div>
+            <div class="speed-lines"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge anime-bounce">
+                <span class="badge-dot"></span>
+                Fotografia &amp; Video Premium
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line anime-slide-right" style="--delay: 0.2s">Tu Marca</span>
+                <span class="title-line anime-slide-left" style="--delay: 0.5s"><span class="text-gradient">Fotografía</span></span>
+                <span class="title-line anime-slide-right" style="--delay: 0.8s">Profesional</span>
+            </h1>
+            <p class="hero-subtitle anime-fade-up" style="--delay: 1.1s">Fotografia de producto, corporativa, redes sociales y video comercial.<br>Contenido visual premium para hacer crecer tu negocio en Leon.</p>
+            <div class="hero-cta anime-fade-up" style="--delay: 1.4s">
+                <a href="#pyme" class="btn-primary anime-pulse">
+                    <span class="btn-text">Ver Servicios</span>
+                    <span class="btn-icon">&#10148;</span>
+                    <div class="btn-particles"><span></span><span></span><span></span><span></span><span></span></div>
+                </a>
+                <a href="https://wa.me/5214779203776?text=Hola%2C%20me%20interesa%20cotizar%20servicios%20para%20mi%20empresa" target="_blank" class="btn-secondary">
+                    <span class="btn-text">Cotizar Ahora</span>
+                    <span class="btn-cube">
+                        <span class="cube-face front">WA</span>
+                        <span class="cube-face back">WA</span>
+                        <span class="cube-face left">WA</span>
+                        <span class="cube-face right">WA</span>
+                    </span>
+                </a>
+            </div>
+            <div class="hero-stats anime-fade-up" style="--delay: 1.7s">
+                <div class="stat-item"><span class="stat-number" data-count="500">0</span><span class="stat-label">Entregas</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat-item"><span class="stat-number" data-count="15">0</span><span class="stat-label">Años de exp.</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat-item"><span class="stat-number" data-count="100">0</span><span class="stat-label">% Satisfaccion</span></div>
+            </div>
+        </div>
+        <div class="hero-3d-container" id="hero-3d" style="position:relative;overflow:hidden;">
+            <iframe src="https://fotolibro.invitados.org/" style="width:100%;height:100%;border:none;border-radius:16px;" loading="lazy"></iframe>
+        </div>
+        <div class="scroll-indicator anime-bounce">
+            <span class="scroll-text">SCROLL</span>
+            <div class="scroll-line"><div class="scroll-dot"></div></div>
+        </div>
+    </section>
+    <!-- PAQUETE PYME -->
+    <section id="pyme" style="background:#0f0f1a; padding:80px 20px;">
+        <div style="max-width:1200px; margin:0 auto;">
+            <div style="text-align:center; margin-bottom:50px;">
+                <span style="font-size:11px; letter-spacing:4px; color:#d4af37; text-transform:uppercase;">Para negocios</span>
+                <h2 style="color:#fff; font-size:2rem; margin:10px 0 8px;">Servicios <span style="color:#d4af37;">para PYMES</span></h2>
+                <p style="color:rgba(255,255,255,0.6);">Fotografía, video y contenido profesional para hacer crecer tu negocio en León</p>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; margin-bottom:40px;">
+                <!-- 1. Producto -->
+                <div style="background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.2); border-radius:16px; overflow:hidden;">
+                    <div style="background:rgba(212,175,55,0.15); padding:16px 20px; display:flex; align-items:center; gap:12px;"><span style="font-size:26px;">📦</span><div><div style="color:#d4af37; font-weight:700; font-size:15px;">Fotografía de Producto</div><div style="color:rgba(255,255,255,0.5); font-size:12px;">Catálogo · E-commerce · Redes</div></div></div>
+                    <div style="padding:20px; display:flex; flex-direction:column; gap:12px;">
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Básico</span><span style="color:#d4af37; font-weight:900;">$3,500</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">15 productos · 2 tomas c/u · Fondo blanco/negro · Edición incluida</div></div>
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Estándar</span><span style="color:#d4af37; font-weight:900;">$6,500</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">30 productos · 3 tomas c/u · Fondo ambiente · Catálogo web y print</div></div>
+                        <div style="background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#d4af37; font-weight:700; font-size:13px;">Catálogo Completo</span><span style="color:#d4af37; font-weight:900;">$11,000</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">60 productos · 4 tomas + lifestyle · Props incluidos · Versiones web y print</div></div>
+                    </div>
+                </div>
+                <!-- 2. Corporativo -->
+                <div style="background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.2); border-radius:16px; overflow:hidden;">
+                    <div style="background:rgba(212,175,55,0.15); padding:16px 20px; display:flex; align-items:center; gap:12px;"><span style="font-size:26px;">🏢</span><div><div style="color:#d4af37; font-weight:700; font-size:15px;">Fotografía Corporativa</div><div style="color:rgba(255,255,255,0.5); font-size:12px;">Equipo · Instalaciones · Perfiles</div></div></div>
+                    <div style="padding:20px; display:flex; flex-direction:column; gap:12px;">
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Básico</span><span style="color:#d4af37; font-weight:900;">$3,000</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Hasta 10 personas · Retrato individual · Fondo neutro o instalaciones</div></div>
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Estándar</span><span style="color:#d4af37; font-weight:900;">$5,500</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Hasta 25 personas · Retratos + grupales · 5 tomas de instalaciones</div></div>
+                        <div style="background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#d4af37; font-weight:700; font-size:13px;">Empresa Completa</span><span style="color:#d4af37; font-weight:900;">$9,000</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Equipo sin límite · Instalaciones completas · Fotos en acción · 20 impresiones 5x7"</div></div>
+                    </div>
+                </div>
+                <!-- 3. Redes Sociales -->
+                <div style="background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.2); border-radius:16px; overflow:hidden;">
+                    <div style="background:rgba(212,175,55,0.15); padding:16px 20px; display:flex; align-items:center; gap:12px;"><span style="font-size:26px;">📱</span><div><div style="color:#d4af37; font-weight:700; font-size:15px;">Contenido Redes Sociales</div><div style="color:rgba(255,255,255,0.5); font-size:12px;">Instagram · Facebook · TikTok</div></div></div>
+                    <div style="padding:20px; display:flex; flex-direction:column; gap:12px;">
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Básico</span><span style="color:#d4af37; font-weight:900;">$4,500<span style="font-size:11px;">/mes</span></span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">12 fotos editadas · 2 sesiones/mes · Todos los formatos</div></div>
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Estándar</span><span style="color:#d4af37; font-weight:900;">$7,500<span style="font-size:11px;">/mes</span></span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">20 fotos + 4 Reels · 3 sesiones/mes · Identidad visual de marca</div></div>
+                        <div style="background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#d4af37; font-weight:700; font-size:13px;">Premium</span><span style="color:#d4af37; font-weight:900;">$12,000<span style="font-size:11px;">/mes</span></span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">30 fotos + 8 Reels · Sesiones ilimitadas · Estrategia + animaciones</div></div>
+                    </div>
+                </div>
+                <!-- 4. Video Comercial -->
+                <div style="background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.2); border-radius:16px; overflow:hidden;">
+                    <div style="background:rgba(212,175,55,0.15); padding:16px 20px; display:flex; align-items:center; gap:12px;"><span style="font-size:26px;">🎬</span><div><div style="color:#d4af37; font-weight:700; font-size:15px;">Video Comercial</div><div style="color:rgba(255,255,255,0.5); font-size:12px;">Reels · Comerciales · Producción</div></div></div>
+                    <div style="padding:20px; display:flex; flex-direction:column; gap:12px;">
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Reel Promocional</span><span style="color:#d4af37; font-weight:900;">$4,500</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Video 30-60 seg · 4 hrs grabación · Edición musicalizada · 1 revisión</div></div>
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Video Comercial</span><span style="color:#d4af37; font-weight:900;">$9,000</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Video 1-2 min · Día completo · Guión + motion graphics · 2 revisiones</div></div>
+                        <div style="background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#d4af37; font-weight:700; font-size:13px;">Producción Completa</span><span style="color:#d4af37; font-weight:900;">$18,000</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Video hasta 5 min · 2 días · Dron incluido · Edición cinematográfica · 3 revisiones</div></div>
+                    </div>
+                </div>
+                <!-- 5. Eventos -->
+                <div style="background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.2); border-radius:16px; overflow:hidden;">
+                    <div style="background:rgba(212,175,55,0.15); padding:16px 20px; display:flex; align-items:center; gap:12px;"><span style="font-size:26px;">🎉</span><div><div style="color:#d4af37; font-weight:700; font-size:15px;">Eventos Empresariales</div><div style="color:rgba(255,255,255,0.5); font-size:12px;">Inauguraciones · Convenciones · Ferias</div></div></div>
+                    <div style="padding:20px; display:flex; flex-direction:column; gap:12px;">
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Básico</span><span style="color:#d4af37; font-weight:900;">$5,500</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Hasta 3 hrs · 100 fotos editadas · Entrega 5 días hábiles</div></div>
+                        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#fff; font-weight:700; font-size:13px;">Estándar</span><span style="color:#d4af37; font-weight:900;">$9,000</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Hasta 6 hrs · 200 fotos + video resumen 2 min · Entrega 5 días</div></div>
+                        <div style="background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:10px; padding:14px;"><div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#d4af37; font-weight:700; font-size:13px;">Evento Completo</span><span style="color:#d4af37; font-weight:900;">$14,000</span></div><div style="color:rgba(255,255,255,0.55); font-size:12px; line-height:1.6;">Día completo 10 hrs · 300 fotos + USB + videoclip + dron · Entrega 7 días</div></div>
+                    </div>
+                </div>
+            </div>
+            <!-- CTA -->
+            <div style="text-align:center; background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.2); border-radius:16px; padding:32px 20px; margin-bottom:36px;">
+                <div style="color:#d4af37; font-size:13px; letter-spacing:3px; text-transform:uppercase; margin-bottom:10px;">🚁 Tomas de Dron +$1,200 en cualquier paquete</div>
+                <p style="color:rgba(255,255,255,0.55); font-size:14px; margin-bottom:24px;">Precios especiales por contrato anual o paquetes combinados · Cotización sin costo</p>
+                <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+                    <a href="https://wa.me/5214779203776?text=Hola%2C%20me%20interesa%20un%20servicio%20para%20mi%20empresa%2C%20quisiera%20una%20cotizaci%C3%B3n" target="_blank" style="background:#d4af37; color:#1a1a2e; padding:14px 32px; border-radius:8px; font-weight:700; text-decoration:none; font-size:15px;">Cotizar para mi empresa</a>
+                    <a href="https://wa.me/5214779203776?text=Hola%2C%20quisiera%20ver%20ejemplos%20de%20trabajo%20para%20empresas" target="_blank" style="background:transparent; border:2px solid #d4af37; color:#d4af37; padding:14px 32px; border-radius:8px; font-weight:700; text-decoration:none; font-size:15px;">Ver ejemplos de trabajo</a>
+                </div>
+            </div>
+            <!-- Stats -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; text-align:center;">
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.2); border-radius:12px; padding:20px;"><div style="font-size:28px; font-weight:900; color:#d4af37;">+15</div><div style="font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px;">años de experiencia</div></div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.2); border-radius:12px; padding:20px;"><div style="font-size:28px; font-weight:900; color:#d4af37;">72h</div><div style="font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px;">tiempo de entrega</div></div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.2); border-radius:12px; padding:20px;"><div style="font-size:28px; font-weight:900; color:#d4af37;">4K</div><div style="font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px;">calidad de video</div></div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.2); border-radius:12px; padding:20px;"><div style="font-size:28px; font-weight:900; color:#d4af37;">5</div><div style="font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px;">servicios PYMES</div></div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section Empresas -->
+    <section id="contacto" class="contact-section">
+        <div class="section-header">
+            <span class="section-tag anime-slide-right">&#9670; CONTACTO EMPRESAS &#9670;</span>
+            <h2 class="section-title">Cotiza para tu <span class="text-gradient">Negocio</span></h2>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info-panel">
+                <div class="contact-card anime-card">
+                    <div class="contact-icon">&#128222;</div>
+                    <h4>WhatsApp</h4>
+                    <p>+52 477 920 3776</p>
+                </div>
+                <div class="contact-card anime-card">
+                    <div class="contact-icon">&#9993;</div>
+                    <h4>Email</h4>
+                    <p>foro7.producciones@hotmail.com</p>
+                </div>
+                <div class="contact-card anime-card">
+                    <div class="contact-icon">&#9203;</div>
+                    <h4>Respuesta</h4>
+                    <p>En menos de 24 horas</p>
+                </div>
+                <div class="contact-socials">
+                    <a href="https://www.facebook.com/Foro7Prod/" class="social-link" aria-label="Facebook">&#402;</a>
+                    <a href="https://wa.me/5214779203776" class="social-link" aria-label="WhatsApp">&#9742;</a>
+                </div>
+            </div>
+            <form class="contact-form anime-form" id="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" required placeholder=" ">
+                    <label for="name">Nombre / Empresa</label>
+                    <div class="input-line"></div>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="email" required placeholder=" ">
+                    <label for="email">Telefono / WhatsApp</label>
+                    <div class="input-line"></div>
+                </div>
+                <div class="form-group">
+                    <select id="service" required>
+                        <option value="" disabled selected>Servicio de interés</option>
+                        <option value="Fotografia de Producto">Fotografia de Producto</option>
+                        <option value="Fotografia Corporativa">Fotografia Corporativa</option>
+                        <option value="Contenido Redes Sociales">Contenido Redes Sociales</option>
+                        <option value="Video Comercial">Video Comercial</option>
+                        <option value="Evento Empresarial">Evento Empresarial</option>
+                        <option value="Paquete Combinado">Paquete Combinado</option>
+                    </select>
+                    <div class="input-line"></div>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" rows="4" required placeholder=" "></textarea>
+                    <label for="message">Describe lo que necesitas</label>
+                    <div class="input-line"></div>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <span class="btn-text">Solicitar Cotizacion</span>
+                    <span class="btn-icon-send">&#10148;</span>
+                    <div class="btn-send-animation"></div>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-anime">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,30 1440,60 L1440,120 L0,120 Z" fill="currentColor"/>
+            </svg>
+        </div>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-icon">&#9672;</span>
+                <span>FORO 7 <span class="accent">STUDIO</span></span>
+            </div>
+            <p class="footer-text">Transformando momentos en arte tangible</p>
+            <div style="display:flex;justify-content:center;gap:16px;margin:20px 0;flex-wrap:wrap;">
+                <a href="https://invitados.org" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;letter-spacing:1px;padding:8px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:6px;transition:all 0.3s;">Inicio</a>
+                <a href="https://foro7.invitados.org/#paquetes" target="_blank" style="color:#d4af37;text-decoration:none;font-size:13px;letter-spacing:1px;padding:8px 20px;border:1px solid rgba(212,175,55,0.3);border-radius:6px;transition:all 0.3s;">Ver Paquetes y Precios</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Desarrollado por Arturo Cruz &mdash; <a href="https://foro7.invitados.org" style="color:#d4af37;text-decoration:none;">Foro 7 Producciones</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 3D Modal Viewer -->
+    <div class="modal-3d" id="modal-3d">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div class="modal-viewer" id="modal-viewer"></div>
+            <div class="modal-info" id="modal-info">
+                <h3>Producto 3D</h3>
+                <p>Arrastra para rotar el modelo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay Fotolibro / Caja -->
+    <div id="product-overlay" style="position:fixed;inset:0;z-index:9999;display:none;">
+        <iframe id="product-overlay-frame" style="width:100%;height:100%;border:none;"></iframe>
+        <button id="product-overlay-close" onclick="closeProductOverlay()" style="position:fixed;top:20px;right:20px;z-index:10000;width:48px;height:48px;border-radius:50%;border:1px solid rgba(212,175,55,0.3);background:rgba(10,10,15,0.85);color:#d4af37;font-size:1.5rem;cursor:pointer;backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;transition:all 0.3s;">&times;</button>
+    </div>
+    <script>
+    function openProductOverlay(url) {
+        var ov = document.getElementById('product-overlay');
+        var fr = document.getElementById('product-overlay-frame');
+        fr.src = url;
+        ov.style.display = 'block';
+    }
+    function closeProductOverlay() {
+        var ov = document.getElementById('product-overlay');
+        var fr = document.getElementById('product-overlay-frame');
+        ov.style.display = 'none';
+        fr.src = 'about:blank';
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeProductOverlay();
+    });
+    </script>
+
+
+<script>
+const cf = document.getElementById('contact-form');
+if(cf) {
+    cf.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('name').value;
+        const tel = document.getElementById('email').value;
+        const svc = document.getElementById('service').value;
+        const msg = document.getElementById('message').value;
+        let text = 'Hola! Soy ' + nombre + '.\nTelefono: ' + tel + '\nServicio: ' + svc;
+        if (msg) text += '\nMensaje: ' + msg;
+        window.open('https://wa.me/5214779203776?text=' + encodeURIComponent(text), '_blank');
+    });
+}
+</script>
+
+<!-- ══ CHATBOT FORO 7 ══════════════════════════════════════════ -->
+<style>
+button:has(.fa-comment-alt),a:has(.fa-comment-alt),div:has(>.fa-comment-alt){display:none!important;}
+#f7cb-btn{position:fixed;bottom:100px;right:30px;z-index:9998;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#b8860b,#d4af37);border:none;cursor:pointer;box-shadow:0 4px 18px rgba(212,175,55,0.5);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .2s;}
+#f7cb-btn:hover{transform:scale(1.1);}
+#f7cb-win{position:fixed;bottom:166px;right:30px;z-index:9999;width:340px;max-height:520px;border-radius:16px;background:#1a1a2e;border:1px solid rgba(212,175,55,0.3);box-shadow:0 8px 40px rgba(0,0,0,0.6);display:none;flex-direction:column;overflow:hidden;font-family:'Segoe UI',sans-serif;}
+#f7cb-win.open{display:flex;}
+#f7cb-head{background:linear-gradient(135deg,#12122a,#1e1e3a);padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(212,175,55,0.2);}
+#f7cb-head img{width:32px;height:32px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(212,175,55,0.5));}
+#f7cb-hn{color:#d4af37;font-weight:700;font-size:14px;}
+#f7cb-hs{color:rgba(255,255,255,0.5);font-size:11px;}
+#f7cb-x{margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.5);font-size:20px;cursor:pointer;line-height:1;padding:0;}
+#f7cb-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
+#f7cb-msgs::-webkit-scrollbar{width:4px;}
+#f7cb-msgs::-webkit-scrollbar-thumb{background:rgba(212,175,55,0.3);border-radius:2px;}
+.cb-bot,.cb-usr{max-width:88%;padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.5;word-break:break-word;}
+.cb-bot{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.9);align-self:flex-start;border-bottom-left-radius:3px;}
+.cb-usr{background:linear-gradient(135deg,#b8860b,#d4af37);color:#1a1a2e;align-self:flex-end;font-weight:600;border-bottom-right-radius:3px;}
+.cb-dot{display:inline-block;width:6px;height:6px;margin:0 2px;background:#d4af37;border-radius:50%;animation:cb-bounce .9s infinite;}
+.cb-dot:nth-child(2){animation-delay:.15s;}.cb-dot:nth-child(3){animation-delay:.3s;}
+@keyframes cb-bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+#f7cb-qr{padding:0 12px 10px;display:flex;flex-wrap:wrap;gap:6px;}
+.cb-qr{background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.35);color:#d4af37;padding:5px 11px;border-radius:20px;font-size:12px;cursor:pointer;transition:background .2s;}
+.cb-qr:hover{background:rgba(212,175,55,0.25);}
+#f7cb-form{display:flex;padding:10px 12px;border-top:1px solid rgba(212,175,55,0.15);gap:8px;}
+#f7cb-inp{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(212,175,55,0.25);border-radius:20px;padding:8px 14px;color:#fff;font-size:13px;outline:none;}
+#f7cb-inp::placeholder{color:rgba(255,255,255,0.35);}
+#f7cb-send{background:#d4af37;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:14px;color:#1a1a2e;display:flex;align-items:center;justify-content:center;}
+</style>
+<button id="f7cb-btn" onclick="f7T()" aria-label="Abrir chat">💬</button>
+<div id="f7cb-win">
+  <div id="f7cb-head">
+    <img src="logo.png" alt="Foro 7">
+    <div><div id="f7cb-hn">Asistente Foro 7</div><div id="f7cb-hs">🟢 En línea</div></div>
+    <button id="f7cb-x" onclick="f7T()">×</button>
+  </div>
+  <div id="f7cb-msgs"></div>
+  <div id="f7cb-qr"></div>
+  <form id="f7cb-form" onsubmit="return false;">
+    <input id="f7cb-inp" placeholder="Escribe tu pregunta..." autocomplete="off">
+    <button id="f7cb-send" type="submit">➤</button>
+  </form>
+</div>
+<script>
+(function(){
+const WA='https://wa.me/5214779203776';
+const KB=[
+  {kw:['hola','buenos','buenas','saludos','hey'],
+   res:'¡Hola! 👋 Soy el asistente de <strong>Foro 7 Producciones</strong>. Creamos álbumes, fotolibros y productos fotográficos premium para tus eventos.\n\n¿En qué te puedo ayudar?',
+   qr:['Ver paquetes','Precios','Álbumes','Contacto']},
+  {kw:['precio','precios','costo','cuanto','cuánto','tarifa','cobran','vale'],
+   res:'💰 <strong>Paquetes Foro 7:</strong>\n\n• Básico — $8,500 MXN\n• Completo — $10,000 MXN ⭐ Más popular\n• Premium — $12,000 MXN\n\n🎯 <strong>Adicionales:</strong>\n• Dron 4K — +$1,500 MXN\n• Invitación Digital — desde $3,500 MXN\n• Música Personalizada — desde +$1,500 MXN',
+   qr:['Básico','Completo','Premium','Cotizar']},
+  {kw:['esencial','basico','básico','economico','inicio'],
+   res:'📦 <strong>Paquete Básico — $8,500 MXN</strong>\n\n✓ 50 fotos impresas 5x7"\n✓ Película USB 4K (2 hrs)\n✓ Foto ampliada 11x14"\n✓ Caja impresa para USB y fotos\n✓ Sesión fotográfica\n✓ 1hr ceremonia + 4hrs fiesta',
+   qr:['Paquete Completo','Ver todos','Cotizar']},
+  {kw:['completo','medio','popular'],
+   res:'⭐ <strong>Paquete Completo — $10,000 MXN</strong> *(Más popular)*\n\n✓ 100 fotos impresas 5x7"\n✓ Película USB editada y musicalizada\n✓ Videoclip para proyectar\n✓ Foto ampliada 50x60cm con marco\n✓ Sesión + misa + fiesta\n✓ 1hr ceremonia + 6hrs fiesta',
+   qr:['Paquete Premium','Cotizar Completo']},
+  {kw:['premium','lujo','exclusivo','vip','todo incluido'],
+   res:'💎 <strong>Paquete Premium — $12,000 MXN</strong>\n\n✓ 200 fotos o fotolibro 30x60cm de lujo\n✓ Película USB editada y musicalizada\n✓ Videoclip para proyectar\n✓ Foto ampliada 60x80cm\n✓ Caja de madera para fotos\n✓ Sesión antes y día del evento\n✓ 1hr ceremonia + 8hrs fiesta',
+   qr:['Cotizar Premium','Ver precios','Contacto']},
+  {kw:['album','álbum','fotolibro','pasta','dura','madera','caja'],
+   res:'📚 <strong>Productos incluidos en los paquetes:</strong>\n\n• Básico: Caja impresa + foto ampliada 11x14"\n• Completo: Foto ampliada 50x60cm con marco\n• Premium: Fotolibro 30x60cm de lujo + caja de madera',
+   qr:['Ver paquetes','Cotizar','Contacto']},
+  {kw:['usb','memoria','pelicula','película'],
+   res:'💾 <strong>USB y Película incluidos:</strong>\n\n• Básico: Película USB 4K (2 hrs)\n• Completo: USB editada y musicalizada\n• Premium: USB editada y musicalizada\n\nIncluido en todos los paquetes.',
+   qr:['Ver paquetes','Contacto']},
+  {kw:['drone','dron','aereo','aéreo','aire'],
+   res:'🚁 <strong>Dron 4K — +$1,500 MXN</strong>\n\n✓ Videos 4K desde el aire\n✓ Piloto certificado\n✓ Tomas de venue y ceremonias\n\nIncluido en Luxury. Agrega +$1,500 a Esencial o Premium.',
+   qr:['Paquete Luxury','Cotizar con dron']},
+  {kw:['invitacion','invitación','digital','web'],
+   res:'💌 <strong>Invitación Digital — desde $3,500 MXN</strong>\n\n✓ Diseño animado personalizado\n✓ RSVP y mapa\n✓ Acceso desde cualquier dispositivo\n\nVer más: <a href="https://foro7.invitados.org" style="color:#d4af37;" target="_blank">foro7.invitados.org</a>',
+   qr:['Ver paquetes de foto','Contacto']},
+  {kw:['musica','música','cancion','audio','personalizada'],
+   res:'🎵 <strong>Música Personalizada — desde +$1,500 MXN</strong>\n\n✓ Composición original\n✓ Producción profesional\n✓ Ideal para el video del evento',
+   qr:['Ver paquetes','Cotizar','Contacto']},
+  {kw:['pyme','empresa','negocio','comercial','corporativo','empresas'],
+   res:'\u{1F3E2} <strong>Servicios para PYMES \u2014 Foro 7</strong>\n\n\u{1F4E6} Producto/Cat\u00e1logo \u2014 desde $3,500\n\u{1F3E2} Corporativo/Equipo \u2014 desde $3,000\n\u{1F4F1} Redes Sociales \u2014 desde $4,500/mes\n\u{1F3AC} Video Comercial \u2014 desde $4,500\n\u{1F389} Eventos Empresariales \u2014 desde $5,500\n\n\u{1F681} Dron +$1,200 en cualquier paquete',
+   qr:['Foto Producto','Video Comercial','Redes Sociales','Cotizar empresa']},
+  {kw:['producto','catalogo','cat\u00e1logo','ecommerce','mercancia'],
+   res:'\u{1F4E6} <strong>Fotograf\u00eda de Producto</strong>\n\n\u2022 B\u00e1sico \u2014 $3,500 (15 productos, 2 tomas c/u)\n\u2022 Est\u00e1ndar \u2014 $6,500 (30 productos, 3 tomas c/u)\n\u2022 Cat\u00e1logo Completo \u2014 $11,000 (60 productos, 4 tomas + lifestyle)\n\nEdici\u00f3n y retoque incluido en todos.',
+   qr:['Video Comercial','Redes Sociales','Cotizar empresa']},
+  {kw:['corporativo','equipo','staff','personal','instalaciones','retrato'],
+   res:'\u{1F3E2} <strong>Fotograf\u00eda Corporativa</strong>\n\n\u2022 B\u00e1sico \u2014 $3,000 (hasta 10 personas)\n\u2022 Est\u00e1ndar \u2014 $5,500 (hasta 25 personas + instalaciones)\n\u2022 Empresa Completa \u2014 $9,000 (equipo sin l\u00edmite + 20 impresiones 5x7")',
+   qr:['Foto Producto','Eventos Empresariales','Cotizar empresa']},
+  {kw:['redes','sociales','instagram','facebook','tiktok','reels','contenido','mensual'],
+   res:'\u{1F4F1} <strong>Contenido para Redes Sociales</strong>\n\n\u2022 B\u00e1sico \u2014 $4,500/mes (12 fotos, 2 sesiones)\n\u2022 Est\u00e1ndar \u2014 $7,500/mes (20 fotos + 4 Reels, 3 sesiones)\n\u2022 Premium \u2014 $12,000/mes (30 fotos + 8 Reels, ilimitadas + estrategia)\n\nSin contratos anuales.',
+   qr:['Video Comercial','Foto Producto','Cotizar empresa']},
+  {kw:['video','comercial','reel','produccion','producci\u00f3n','spot'],
+   res:'\u{1F3AC} <strong>Video Comercial</strong>\n\n\u2022 Reel Promocional \u2014 $4,500 (30-60 seg, 4hrs)\n\u2022 Video Comercial \u2014 $9,000 (1-2 min, d\u00eda completo, motion graphics)\n\u2022 Producci\u00f3n Completa \u2014 $18,000 (hasta 5 min, 2 d\u00edas, dron incluido)',
+   qr:['Redes Sociales','Eventos Empresariales','Cotizar empresa']},
+  {kw:['evento','eventos','inauguracion','inauguraci\u00f3n','convencion','feria'],
+   res:'\u{1F389} <strong>Eventos Empresariales</strong>\n\n\u2022 B\u00e1sico \u2014 $5,500 (3 hrs, 100 fotos)\n\u2022 Est\u00e1ndar \u2014 $9,000 (6 hrs, 200 fotos + video 2 min)\n\u2022 Evento Completo \u2014 $14,000 (10 hrs, 300 fotos + USB + videoclip + dron)',
+   qr:['Video Comercial','Cotizar empresa','Contacto']},
+    {kw:['referido','referidos','recomendar','descuento','amigo'],
+   res:'🤝 <strong>Programa de Referidos</strong>\n\n🎁 <strong>Tú:</strong> $500 MXN de crédito\n🎁 <strong>Tu amigo:</strong> 20% de descuento\n\n¡Sin límite de referidos!',
+   qr:['Cotizar para mí','Contacto']},
+  {kw:['contacto','whatsapp','llamar','telefono','asesor','cotizar'],
+   res:'📲 <strong>¡Contáctanos!</strong>\n\n📞 +52 477 920 3776\n📧 foro7.producciones@hotmail.com\n📍 Padilla 112, Cumbres de Arbide, León, Gto.\n\n<a href="'+WA+'" target="_blank" style="color:#d4af37;">👉 Abrir WhatsApp</a>',
+   qr:[]},
+  {kw:['ubicacion','ubicación','donde','dónde','leon','gto'],
+   res:'📍 <strong>León, Guanajuato</strong>\n\nPadilla 112, Cumbres de Arbide\nLeón, Gto.\n\n📞 +52 477 920 3776',
+   qr:['Contacto','Ver paquetes']},
+  {kw:['boda','bodas','matrimonio','novios'],
+   res:'💍 <strong>Bodas — Foro 7 Producciones</strong>\n\n• Básico — $8,500 MXN (1hr + 4hrs fiesta)\n• Completo — $10,000 MXN (1hr + 6hrs fiesta)\n• Premium — $12,000 MXN (1hr + 8hrs fiesta)\n\nFotos impresas, USB, videoclip y foto ampliada.',
+   qr:['Paquete Básico','Paquete Completo','Cotizar mi boda']},
+  {kw:['quince','quinces','xv','15','fiesta'],
+   res:'👑 <strong>XV Años — Foro 7 Producciones</strong>\n\n• Básico — $8,500 MXN\n• Completo — $10,000 MXN\n• Premium — $12,000 MXN',
+   qr:['Ver paquetes','Cotizar mis XV']},
+  {kw:['disponible','disponibilidad','fecha','agendar','reservar'],
+   res:'📅 Para verificar disponibilidad:\n\n📞 +52 477 920 3776',
+   qr:['Abrir WhatsApp','Ver paquetes']}
+];
+const FB={res:'No encontré esa respuesta, pero un asesor puede ayudarte. 😊',qr:['Ver paquetes','Precios','Contacto por WhatsApp']};
+function nm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ');}
+function match(txt){let best=null,top=0;const t=nm(txt);KB.forEach(i=>{let sc=0;i.kw.forEach(k=>{if(t.includes(nm(k)))sc+=k.length;});if(sc>top){top=sc;best=i;}});return top>0?best:null;}
+function userMsg(t){const d=document.createElement('div');d.className='cb-usr';d.textContent=t;document.getElementById('f7cb-msgs').appendChild(d);d.scrollIntoView({block:'end'});}
+function bot(intent){
+  const msgs=document.getElementById('f7cb-msgs'),qrEl=document.getElementById('f7cb-qr');
+  qrEl.innerHTML='';
+  const typing=document.createElement('div');typing.className='cb-bot';
+  typing.innerHTML='<span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span>';
+  msgs.appendChild(typing);typing.scrollIntoView({block:'end'});
+  setTimeout(()=>{
+    typing.remove();
+    const d=document.createElement('div');d.className='cb-bot';
+    d.innerHTML=intent.res.replace(/\n/g,'<br>');
+    msgs.appendChild(d);d.scrollIntoView({block:'end'});
+    (intent.qr||[]).forEach(q=>{const btn=document.createElement('button');btn.className='cb-qr';btn.textContent=q;btn.onclick=()=>qrClick(q);qrEl.appendChild(btn);});
+  },700);
+}
+function qrClick(q){
+  document.getElementById('f7cb-qr').innerHTML='';userMsg(q);
+  if(['cotizar','whatsapp','asesor','abrir whatsapp'].some(t=>nm(q).includes(nm(t)))){window.open(WA,'_blank');return;}
+  bot(match(q)||FB);
+}
+function send(){
+  const inp=document.getElementById('f7cb-inp'),txt=inp.value.trim();if(!txt)return;
+  inp.value='';document.getElementById('f7cb-qr').innerHTML='';userMsg(txt);
+  if(['cotizar','whatsapp','asesor','verificar'].some(t=>nm(txt).includes(nm(t)))){window.open(WA,'_blank');return;}
+  bot(match(txt)||FB);
+}
+function f7T(){
+  const w=document.getElementById('f7cb-win'),open=w.classList.toggle('open');
+  if(open&&!document.getElementById('f7cb-msgs').children.length){
+    bot({res:'¡Hola! 👋 ¿Qué tipo de recuerdo fotográfico buscas? 📸',qr:['Ver paquetes','Precios','Álbumes','Bodas','XV Años']});
+  }
+}
+document.getElementById('f7cb-form').addEventListener('submit',send);
+document.getElementById('f7cb-send').addEventListener('click',send);
+window.f7T=f7T;
+})();
+</script>
+<!-- ══ FIN CHATBOT ══════════════════════════════════════════════ -->
+</body>
+</html>
